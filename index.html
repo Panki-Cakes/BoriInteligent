@@ -139,7 +139,7 @@
         <!-- Área de Respuesta de la IA (donde se mostrará la conversación) -->
         <div id="ai-response-area">
             <div class="message-ai">
-                <p>¡Hola Boris! Soy tu asistente BoriInteligencia, conectado a Google para darte la información más reciente. ¡Pregúntame lo que quieras y te responderé con la verdad y fuentes!</p>
+                <p>¡Hola! Soy tu asistente BoriInteligencia, conectado a Google para darte la información más reciente. ¡Pregúntame lo que quieras y te responderé con la verdad y fuentes!</p>
             </div>
         </div>
 
@@ -185,7 +185,6 @@
         function isGrownUpContent(query) {
             const forbiddenTerms = [
                 "cosas para grande",
-                "adulto",
                 "prohibido",
                 "sexual",
                 "armas",
@@ -225,7 +224,7 @@
                 monitoMessage.classList.add('text-red-500');
                 sendButton.disabled = false; // Permite intentar otra pregunta
             } else if (state === 'loading') {
-                monitoMessage.textContent = "¡La IA de Bori está pensando! Dame un momento... 🧠";
+                monitoMessage.textContent = "¡La IA de Boris está pensando! Dame un momento... 🧠";
                 monitoMessage.classList.remove('text-blue-600', 'text-red-500');
                 monitoMessage.classList.add('text-gray-500');
                 sendButton.disabled = true;
@@ -275,7 +274,7 @@
             // 2. Verificar contenido sensible ANTES de enviar a la IA
             if (isGrownUpContent(prompt)) {
                 updateMonitos(true); // Cierra los ojos inmediatamente
-                addMessage("Tu pregunta contiene un término sensible. Los monitos han cerrado los ojos. 🙈 ¡Intenta preguntar algo más divertido!", 'model');
+                addMessage("Tu pregunta contiene un término sensible. Los monitos han cerrado los ojos. 🙈 ¡Intenta no decir palabrotas!", 'model');
                 return;
             }
 
@@ -284,9 +283,9 @@
             
             // Crear el payload con el historial de chat
             const apiKey = "AIzaSyArls9cCuDl7co64srUkC7slF3Ub_GxVnA"; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${AIzaSyArls9cCuDl7co64srUkC7slF3Ub_GxVnA}`;
 
-            const systemPrompt = "Actúa como un asistente personal amigable, útil y ligeramente juguetón llamado 'BoriInteligencia'. Responde a las preguntas de manera informativa y con entusiasmo, utilizando la información más reciente de Google Search. Tu respuesta debe ser concisa, en español, y siempre debes incluir las fuentes de información. Mantén un tono adecuado para un niño de 9 años.";
+            const systemPrompt = "Actúa como un asistente personal amigable, útil y sin usar palabras dificiles para los niños llamado 'BoriInteligencia'. Responde a las preguntas de manera informativa y con entusiasmo, utilizando la información más reciente de Google Search. Tu respuesta debe ser concisa, en español, o el idioma que eligan y siempre debes incluir las fuentes de información, si es que la fuente esta en otro idioma, no obliges al niño a tener que usar un traductor. Mantén un tono adecuado para un niño de 9 años.";
             
             const payload = {
                 contents: chatHistory,
@@ -324,7 +323,7 @@
                     retries++;
                     if (retries >= maxRetries) {
                         console.error("Máximo de reintentos alcanzado. Error al llamar a la API:", error);
-                        addMessage("¡Houston, tenemos un problema! No pude contactar a la IA. Intenta preguntar de nuevo. 😟", 'model');
+                        addMessage("¡Lo Siento!, tenemos un problema! No pude contactar a la IA. Intenta preguntar de nuevo. 😟", 'model');
                         updateMonitos(false);
                         return;
                     }
@@ -371,5 +370,6 @@
 </body>
 
 </html>
+
 
 
